@@ -1,7 +1,8 @@
 <div class="flex flex-col justify-center items-center text-xl my-8">
   <div class="text-center">
     <label class="block mb-4" for="files"
-      >Please upload the AC files here [max 5 files at a time]</label
+      >Please upload the AC files here [max {{ maxFiles }} files at a
+      time]</label
     >
     <input
       #fileInput
@@ -22,7 +23,9 @@
     <button
       class="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded mt-4 disabled:opacity-50 disabled:hover:bg-slate-500 cursor-pointer disabled:cursor-not-allowed"
       (click)="onUpload()"
-      [disabled]="!filenames.length || filenames.length > 5 || showProgress"
+      [disabled]="
+        !filenames.length || filenames.length > maxFiles || showProgress
+      "
     >
       Upload
     </button>

@@ -24,6 +24,7 @@ export class FormComponent {
   showProgress: boolean = false;
   showError: boolean = false;
   errorMessage: string = '';
+  maxFiles: number = 3;
 
   constructor(private renderer: Renderer2) {}
 
@@ -34,7 +35,7 @@ export class FormComponent {
       this.filenames = Array.from(this.files).map((file) => file.name);
     }
 
-    if (this.filenames.length > 5) {
+    if (this.filenames.length > this.maxFiles) {
       this.showError = true;
       this.errorMessage =
         "Please don't upload more than 5 files. It will take a long time to process and the request might time out.";
@@ -43,7 +44,11 @@ export class FormComponent {
   }
 
   async onUpload() {
-    if (!this.files || this.files.length === 0 || this.files.length > 5) {
+    if (
+      !this.files ||
+      this.files.length === 0 ||
+      this.files.length > this.maxFiles
+    ) {
       return;
     }
 
