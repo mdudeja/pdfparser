@@ -1,0 +1,42 @@
+<div class="flex flex-col justify-center items-center text-xl my-8">
+  <div class="text-center">
+    <label class="block mb-4" for="files"
+      >Please upload the AC files here [max 5 files at a time]</label
+    >
+    <input
+      #fileInput
+      class="mx-auto"
+      type="file"
+      id="files"
+      name="files[]"
+      accept="application/pdf"
+      multiple
+      (change)="onFilesChange($event)"
+    />
+
+    <ul class="my-4" *ngIf="filenames.length">
+      <li *ngFor="let filename of filenames">{{ filename }}</li>
+    </ul>
+  </div>
+  <div class="flex flex-row self-end mx-12 my-8">
+    <button
+      class="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded mt-4 disabled:opacity-50 disabled:hover:bg-slate-500 cursor-pointer disabled:cursor-not-allowed"
+      (click)="onUpload()"
+      [disabled]="!filenames.length || filenames.length > 5 || showProgress"
+    >
+      Upload
+    </button>
+    <button
+      class="bg-white-500 hover:text-blue-900 text-blue-500 font-bold py-2 px-4 rounded mt-4 disabled:opacity-50 disabled:hover:text-blue-500 cursor-pointer disabled:cursor-not-allowed"
+      (click)="reset()"
+      [disabled]="!filenames.length"
+    >
+      Reset
+    </button>
+  </div>
+</div>
+<app-alert-progress
+  [show]="showProgress"
+  [message]="'Processing the PDF... Please wait...'"
+></app-alert-progress>
+<app-alert-error [show]="showError" [message]="errorMessage"></app-alert-error>
